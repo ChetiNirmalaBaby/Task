@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Learnly — Online Learning Platform (Demo)</title>
+  <meta name="description" content="A clean, responsive single-file demo for an online learning platform with courses, search, filters, and enrollment interactions." />
+  <!-- Tailwind CDN (play-friendly) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Small custom tweaks */
+    .glass { background: rgba(255,255,255,0.7); backdrop-filter: blur(6px); }
+    .card-shadow { box-shadow: 0 6px 18px rgba(15,23,42,0.08); }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+  <!-- NAV -->
+  <header class="sticky top-0 z-40 bg-white/70 backdrop-blur-md border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="#" class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold">L</div>
+          <div class="hidden sm:block">
+            <div class="font-semibold">Learnly</div>
+            <div class="text-xs text-gray-500">Learn anything, anywhere</div>
+          </div>
+        </a>
+
+        <div class="flex-1 px-4">
+          <div class="relative max-w-xl mx-auto">
+            <input id="searchInput" type="search" placeholder="Search courses, instructors, topics..." class="w-full rounded-full border border-gray-200 py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-indigo-300" />
+            <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z"/></svg>
+          </div>
+        </div>
+
+        <nav class="hidden md:flex items-center gap-4">
+          <a href="#courses" class="text-sm hover:text-indigo-600">Courses</a>
+          <a href="#instructors" class="text-sm hover:text-indigo-600">Instructors</a>
+          <a href="#pricing" class="text-sm hover:text-indigo-600">Pricing</a>
+          <button id="signinBtn" class="ml-2 px-4 py-1.5 rounded-full bg-indigo-600 text-white text-sm shadow">Sign in</button>
+        </nav>
+
+        <button id="mobileToggle" class="md:hidden p-2"> 
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- mobile nav -->
+    <div id="mobileNav" class="hidden md:hidden border-t border-gray-100">
+      <div class="px-4 py-3 flex flex-col gap-2">
+        <a href="#courses" class="text-sm">Courses</a>
+        <a href="#instructors" class="text-sm">Instructors</a>
+        <a href="#pricing" class="text-sm">Pricing</a>
+        <button id="mobileSignIn" class="mt-2 px-4 py-2 rounded bg-indigo-600 text-white text-sm">Sign in</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- HERO -->
+    <section class="grid md:grid-cols-2 gap-8 items-center mb-10">
+      <div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold leading-tight">Upskill with bite-sized, expert-led courses</h1>
+        <p class="mt-3 text-gray-600">Interactive lessons, real-world projects, and certificates. Start free — upgrade when you're ready.</p>
+        <div class="mt-6 flex gap-3">
+          <a href="#courses" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white shadow">Browse Courses</a>
+          <a href="#pricing" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200">See Pricing</a>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 text-sm text-gray-600">
+          <div class="flex items-center gap-2"><strong class="text-indigo-600">4.8</strong> avg rating</div>
+          <div class="flex items-center gap-2"><strong class="text-indigo-600">120K+</strong> learners</div>
+          <div class="flex items-center gap-2"><strong class="text-indigo-600">500+</strong> courses</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card-shadow rounded-xl overflow-hidden glass p-6">
+          <h3 class="font-semibold">Try a sample lesson</h3>
+          <div class="mt-4">
+            <div class="w-full aspect-video bg-gray-200 rounded flex items-center justify-center"> 
+              <span class="text-gray-500"><iframe width="560" height="315" src="https://www.youtube.com/embed/bJzb-RuUcMU?si=2r-PCfDAqqcPmjHD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></span>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-gray-600">No sign-up required. Explore course structure, video player and resources.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTERS + COURSES -->
+    <section id="courses" class="mb-12">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <h2 class="text-xl font-semibold">Popular Courses</h2>
+        <div class="flex gap-2 items-center">
+          <select id="categoryFilter" class="rounded border border-gray-200 py-1 px-3 text-sm">
+            <option value="all">All categories</option>
+            <option value="web">Web Development</option>
+            <option value="data">Data Science</option>
+            <option value="design">Design</option>
+            <option value="business">Business</option>
+          </select>
+          <select id="levelFilter" class="rounded border border-gray-200 py-1 px-3 text-sm">
+            <option value="all">All levels</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
+          <button id="clearFilters" class="text-sm px-3 py-1 rounded border border-gray-200">Clear</button>
+        </div>
+      </div>
+
+      <div id="coursesGrid" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- JS will inject course cards -->
+      </div>
+
+      <div class="mt-8 text-center">
+        <button id="loadMore" class="px-4 py-2 rounded bg-white border border-gray-200">Load more</button>
+      </div>
+    </section>
+
+    <!-- INSTRUCTORS -->
+    <section id="instructors" class="mb-12">
+      <h2 class="text-xl font-semibold">Top Instructors</h2>
+      <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <!-- sample instructors -->
+        <div class="p-4 bg-white rounded-lg card-shadow flex flex-col items-center text-center">
+          <div class="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center font-semibold">AR</div>
+          <div class="mt-3 font-medium">Aria R.</div>
+          <div class="text-xs text-gray-500">Web dev</div>
+        </div>
+        <div class="p-4 bg-white rounded-lg card-shadow flex flex-col items-center text-center">
+          <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center font-semibold">MS</div>
+          <div class="mt-3 font-medium">M. Singh</div>
+          <div class="text-xs text-gray-500">Data Science</div>
+        </div>
+        <div class="p-4 bg-white rounded-lg card-shadow flex flex-col items-center text-center">
+          <div class="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center font-semibold">JK</div>
+          <div class="mt-3 font-medium">J. Kapoor</div>
+          <div class="text-xs text-gray-500">UI/UX</div>
+        </div>
+        <div class="p-4 bg-white rounded-lg card-shadow flex flex-col items-center text-center">
+          <div class="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center font-semibold">LN</div>
+          <div class="mt-3 font-medium">L. Nair</div>
+          <div class="text-xs text-gray-500">Business</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="mb-12">
+      <h2 class="text-xl font-semibold">Pricing</h2>
+      <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="p-6 rounded-lg bg-white card-shadow">
+          <h3 class="font-semibold">Free</h3>
+          <p class="mt-2 text-3xl font-bold">$0 <span class="text-base font-medium">/ forever</span></p>
+          <ul class="mt-4 text-sm text-gray-600 space-y-2">
+            <li>Access to free courses</li>
+            <li>Community support</li>
+          </ul>
+          <button class="mt-4 w-full py-2 rounded bg-indigo-600 text-white">Get Started</button>
+        </div>
+        <div class="p-6 rounded-lg bg-white card-shadow">
+          <h3 class="font-semibold">Pro</h3>
+          <p class="mt-2 text-3xl font-bold">$12 <span class="text-base font-medium">/ month</span></p>
+          <ul class="mt-4 text-sm text-gray-600 space-y-2">
+            <li>All courses</li>
+            <li>Certificates & projects</li>
+            <li>Priority support</li>
+          </ul>
+          <button class="mt-4 w-full py-2 rounded border border-indigo-600 text-indigo-600">Start Pro</button>
+        </div>
+        <div class="p-6 rounded-lg bg-white card-shadow">
+          <h3 class="font-semibold">Enterprise</h3>
+          <p class="mt-2 text-3xl font-bold">Contact</p>
+          <ul class="mt-4 text-sm text-gray-600 space-y-2">
+            <li>Team licenses</li>
+            <li>Dedicated onboarding</li>
+          </ul>
+          <button class="mt-4 w-full py-2 rounded bg-indigo-600 text-white">Contact Sales</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="pt-8 pb-12 text-sm text-gray-500">
+      <div class="flex flex-col md:flex-row md:justify-between gap-4">
+        <div>
+          <div class="font-semibold">Learnly</div>
+          <div class="mt-2">© <span id="year"></span> Learnly. All rights reserved.</div>
+        </div>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-gray-800">Terms</a>
+          <a href="#" class="hover:text-gray-800">Privacy</a>
+          <a href="#" class="hover:text-gray-800">Help</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- COURSE MODAL -->
+  <div id="courseModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4">
+    <div class="max-w-2xl w-full bg-white rounded-lg overflow-hidden">
+      <div class="p-6">
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 id="modalTitle" class="text-xl font-semibold">Course title</h3>
+            <div id="modalMeta" class="text-sm text-gray-500 mt-1">by instructor • level • 6 hours</div>
+          </div>
+          <button id="closeModal" class="text-gray-500">✕</button>
+        </div>
+
+        <p id="modalDesc" class="mt-4 text-gray-700">Course description goes here.</p>
+
+        <div class="mt-6 flex gap-3">
+          <button id="enrollBtn" class="px-4 py-2 rounded bg-indigo-600 text-white">Enroll</button>
+          <button id="saveBtn" class="px-4 py-2 rounded border border-gray-200">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGN IN / SIMPLE DUMMY -->
+  <div id="signinModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 p-4">
+    <div class="max-w-md w-full bg-white rounded-lg overflow-hidden">
+      <div class="p-6">
+        <div class="flex justify-between items-center">
+          <h3 class="text-lg font-semibold">Sign in</h3>
+          <button id="closeSignin" class="text-gray-500">✕</button>
+        </div>
+        <form id="signinForm" class="mt-4 grid gap-3">
+          <input required placeholder="Email" type="email" class="border border-gray-200 rounded px-3 py-2" />
+          <input required placeholder="Password" type="password" class="border border-gray-200 rounded px-3 py-2" />
+          <div class="flex justify-end gap-2">
+            <button type="button" id="demoSignin" class="px-3 py-2 rounded bg-indigo-600 text-white">Sign in</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sample course dataset (would usually come from an API)
+    const courses = [
+      {id:1, title:'Fullstack Web Development', instructor:'Aria R.', level:'intermediate', category:'web', hours:28, price:49, rating:4.8, desc:'Build modern web apps using HTML, CSS, JS, Node and React.'},
+      {id:2, title:'Intro to Data Science', instructor:'M. Singh', level:'beginner', category:'data', hours:18, price:39, rating:4.7, desc:'Statistics, Python, and practical ML workflows.'},
+      {id:3, title:'UI/UX Fundamentals', instructor:'J. Kapoor', level:'beginner', category:'design', hours:12, price:29, rating:4.6, desc:'Design thinking, wireframes, and prototyping.'},
+      {id:4, title:'Advanced Machine Learning', instructor:'Dr. Patel', level:'advanced', category:'data', hours:40, price:99, rating:4.9, desc:'Deep learning, deployment, and model optimization.'},
+      {id:5, title:'Product Management Essentials', instructor:'L. Nair', level:'intermediate', category:'business', hours:16, price:59, rating:4.5, desc:'Roadmaps, KPIs, and stakeholder management.'},
+      {id:6, title:'React from Scratch', instructor:'Aria R.', level:'intermediate', category:'web', hours:20, price:45, rating:4.8, desc:'Hooks, state management, routing and testing.'}
+    ];
+
+    let displayed = 3; // simple pagination
+
+    const coursesGrid = document.getElementById('coursesGrid');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const levelFilter = document.getElementById('levelFilter');
+    const searchInput = document.getElementById('searchInput');
+    const loadMoreBtn = document.getElementById('loadMore');
+
+    function renderCourses() {
+      const cat = categoryFilter.value;
+      const lvl = levelFilter.value;
+      const q = searchInput.value.trim().toLowerCase();
+
+      const filtered = courses.filter(c => {
+        if (cat !== 'all' && c.category !== cat) return false;
+        if (lvl !== 'all' && c.level !== lvl) return false;
+        if (q && !(c.title.toLowerCase().includes(q) || c.instructor.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q))) return false;
+        return true;
+      });
+
+      coursesGrid.innerHTML = '';
+      const slice = filtered.slice(0, displayed);
+
+      slice.forEach(c => {
+        const card = document.createElement('article');
+        card.className = 'bg-white rounded-lg p-4 card-shadow';
+        card.innerHTML = `
+          <div class=\"flex justify-between items-start gap-3\">
+            <div>
+              <h3 class=\"font-semibold text-lg\">${c.title}</h3>
+              <div class=\"text-sm text-gray-500 mt-1\">by ${c.instructor} • ${c.level} • ${c.hours} hrs</div>
+            </div>
+            <div class=\"text-right\">
+              <div class=\"font-bold\">$${c.price}</div>
+              <div class=\"text-xs text-gray-500\">${c.rating} ★</div>
+            </div>
+          </div>
+          <p class=\"mt-3 text-sm text-gray-600\">${c.desc}</p>
+          <div class=\"mt-4 flex gap-2\">
+            <button class=\"openBtn px-3 py-1 rounded bg-indigo-600 text-white text-sm\" data-id=\"${c.id}\">View</button>
+            <button class=\"enrollInline px-3 py-1 rounded border border-gray-200 text-sm\" data-id=\"${c.id}\">Enroll</button>
+          </div>
+        `;
+        coursesGrid.appendChild(card);
+      });
+
+      // attach listeners
+      document.querySelectorAll('.openBtn').forEach(b => b.addEventListener('click', e => openModal(e.target.dataset.id)));
+      document.querySelectorAll('.enrollInline').forEach(b => b.addEventListener('click', e => enrollCourse(e.target.dataset.id)));
+
+      // load more visibility
+      loadMoreBtn.style.display = (filtered.length > displayed) ? 'inline-block' : 'none';
+    }
+
+    function openModal(id) {
+      const c = courses.find(x => x.id == id);
+      if (!c) return;
+      document.getElementById('modalTitle').textContent = c.title;
+      document.getElementById('modalMeta').textContent = `by ${c.instructor} • ${c.level} • ${c.hours} hours`;
+      document.getElementById('modalDesc').textContent = c.desc + ' — This demo shows how you might preview a course before enrolling.';
+      document.getElementById('courseModal').classList.remove('hidden');
+      document.getElementById('enrollBtn').dataset.id = c.id;
+    }
+
+    function closeModal() { document.getElementById('courseModal').classList.add('hidden'); }
+    function showSignin() { document.getElementById('signinModal').classList.remove('hidden'); }
+    function closeSignin() { document.getElementById('signinModal').classList.add('hidden'); }
+
+    function enrollCourse(id) {
+      const c = courses.find(x => x.id == id);
+      if (!c) return;
+      alert(`Enrolled (demo): ${c.title} — A real app would open checkout or add to student dashboard.`);
+    }
+
+    // event wiring
+    categoryFilter.addEventListener('change', () => { displayed = 6; renderCourses(); });
+    levelFilter.addEventListener('change', () => { displayed = 6; renderCourses(); });
+    document.getElementById('clearFilters').addEventListener('click', () => { categoryFilter.value='all'; levelFilter.value='all'; searchInput.value=''; displayed=3; renderCourses(); });
+    searchInput.addEventListener('input', () => { displayed = 6; renderCourses(); });
+    loadMoreBtn.addEventListener('click', () => { displayed += 3; renderCourses(); });
+
+    // modal buttons
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('enrollBtn').addEventListener('click', e => enrollCourse(e.target.dataset.id));
+    document.getElementById('saveBtn').addEventListener('click', () => alert('Saved to wishlist (demo)'));
+
+    // sign in
+    document.getElementById('signinBtn').addEventListener('click', showSignin);
+    document.getElementById('closeSignin').addEventListener('click', closeSignin);
+    document.getElementById('mobileSignIn').addEventListener('click', showSignin);
+    document.getElementById('mobileToggle').addEventListener('click', () => document.getElementById('mobileNav').classList.toggle('hidden'));
+    document.getElementById('demoSignin').addEventListener('click', () => { alert('Signed in (demo) - UI only'); closeSignin(); });
+
+    // small helpers
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // initial render
+    renderCourses();
+
+    // accessible close on overlay click
+    document.getElementById('courseModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal(); });
+    document.getElementById('signinModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeSignin(); });
+
+    // keyboard escape
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); closeSignin(); } });
+  </script>
+
+</body>
+</html>
